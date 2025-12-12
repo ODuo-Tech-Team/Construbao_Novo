@@ -107,13 +107,17 @@ function detectSiteUrl(): string {
     $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
     $scriptDir = dirname($scriptName);
 
-    // Remove /includes se estiver nele
-    if (strpos($scriptDir, '/includes') !== false) {
-        $scriptDir = dirname($scriptDir);
+    // Remove subdiretórios internos do path (/includes, /admin, etc.)
+    $internalDirs = ['/includes', '/admin', '/assets', '/uploads', '/database'];
+    foreach ($internalDirs as $dir) {
+        if (strpos($scriptDir, $dir) !== false) {
+            $scriptDir = preg_replace('#' . preg_quote($dir, '#') . '.*$#', '', $scriptDir);
+            break;
+        }
     }
 
     // Limpa o path
-    $basePath = ($scriptDir === '/' || $scriptDir === '\\') ? '' : $scriptDir;
+    $basePath = ($scriptDir === '/' || $scriptDir === '\\' || $scriptDir === '') ? '' : $scriptDir;
 
     return $protocol . '://' . $host . $basePath;
 }

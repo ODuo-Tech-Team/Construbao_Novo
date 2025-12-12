@@ -146,13 +146,13 @@ include __DIR__ . '/includes/header.php';
 </style>
 
 <!-- Equipamentos Section -->
-<section style="padding: 96px 0; background: var(--color-background-muted);">
+<section style="padding: 96px 0; background: white;">
     <div class="container" style="padding: 0 var(--spacing-4);">
         <!-- Header -->
-        <div style="display: flex; flex-direction: column; gap: var(--spacing-6); margin-bottom: var(--spacing-16);" class="equipamentos-header">
+        <div style="display: flex; flex-direction: column; gap: var(--spacing-6); margin-bottom: 64px;" class="equipamentos-header">
             <div data-animate="slide-up">
-                <span style="font-family: var(--font-subtitle); font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-primary); font-weight: 600;">Equipamentos Disponíveis</span>
-                <h2 style="font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.75rem); color: var(--color-foreground); margin-top: var(--spacing-4); line-height: 1.1;">Locação de Equipamentos para Construção</h2>
+                <span style="font-family: var(--font-subtitle); font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-accent, #f37520); font-weight: 600;">Equipamentos Disponíveis</span>
+                <h2 style="font-family: var(--font-display); font-size: clamp(1.875rem, 4vw, 2.5rem); color: var(--color-foreground); margin-top: var(--spacing-4); line-height: 1.1;">Locação de Equipamentos para Construção</h2>
             </div>
             <a href="<?= SITE_URL ?>/equipamentos.php" data-animate="slide-up" style="display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--color-primary); padding: 12px 24px; font-family: var(--font-subtitle); font-size: var(--text-sm); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border: 2px solid var(--color-primary); border-radius: 8px; transition: all 0.3s ease; width: fit-content;">
                 Ver Todos
@@ -164,17 +164,16 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <!-- Grid de Equipamentos -->
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-4);" class="equipamentos-grid">
+        <div class="equipamentos-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
             <?php
             $equipamentosPreview = array_slice($equipamentos, 0, 5);
             foreach ($equipamentosPreview as $index => $equip):
             ?>
-            <a href="<?= SITE_URL ?>/equipamento.php?slug=<?= e($equip['slug']) ?>" class="equip-card" data-animate="slide-up" data-animate-delay="<?= $index + 1 ?>" style="position: relative; aspect-ratio: 1; border-radius: 16px; overflow: hidden; display: block; background: #f5f5f5;">
-                <img src="<?= SITE_URL ?>/<?= e($equip['imagem']) ?>" alt="<?= e($equip['nome']) ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
-                <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%); transition: background 0.3s ease;"></div>
-                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: var(--spacing-4); transform: translateY(0); transition: transform 0.3s ease;">
-                    <h3 style="font-family: var(--font-display); font-size: var(--text-lg); color: white; margin: 0; line-height: 1.2;"><?= e($equip['nome']) ?></h3>
+            <a href="<?= SITE_URL ?>/equipamento.php?slug=<?= e($equip['slug']) ?>" class="equip-card" data-animate="slide-up" style="display: block; background: white; border-radius: 12px; border: 1px solid var(--color-border); padding: 16px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; animation-delay: <?= $index * 0.05 ?>s;">
+                <div style="aspect-ratio: 1; margin-bottom: 16px; overflow: hidden; border-radius: 8px; background: white; display: flex; align-items: center; justify-content: center; padding: 8px;">
+                    <img src="<?= SITE_URL ?>/<?= e($equip['imagem']) ?>" alt="<?= e($equip['nome']) ?>" style="width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease;">
                 </div>
+                <h3 style="font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-foreground); margin: 0;"><?= e($equip['nome']) ?></h3>
             </a>
             <?php endforeach; ?>
         </div>
@@ -198,11 +197,13 @@ include __DIR__ . '/includes/header.php';
         justify-content: space-between !important;
     }
 }
-.equip-card:hover img {
-    transform: scale(1.1);
+.equip-card:hover {
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    border-color: var(--color-primary);
+    transform: translateY(-4px);
 }
-.equip-card:hover > div:first-of-type {
-    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 100%);
+.equip-card:hover img {
+    transform: scale(1.05);
 }
 </style>
 

@@ -47,7 +47,7 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Breadcrumb -->
-<section style="padding: var(--spacing-4) 0; margin-top: 80px; background: var(--color-background-muted);">
+<section style="padding: 32px 0 24px; margin-top: 100px; background: var(--color-background-muted);">
     <div class="container">
         <nav class="breadcrumb">
             <a href="<?= SITE_URL ?>" class="breadcrumb-link">Home</a>
