@@ -84,7 +84,41 @@ define('DB_CHARSET', env('DB_CHARSET', 'utf8mb4'));
 // =====================================================
 // CONFIGURAÇÕES DO SITE
 // =====================================================
-define('SITE_URL', env('SITE_URL', 'http://localhost'));
+
+/**
+ * Detecta automaticamente a URL base do site
+ */
+function detectSiteUrl(): string {
+    // Se definido no .env, usa esse valor
+    $envUrl = env('SITE_URL', '');
+    if (!empty($envUrl) && $envUrl !== 'auto') {
+        return rtrim($envUrl, '/');
+    }
+
+    // Detecta automaticamente
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+                (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+                (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
+                ? 'https' : 'http';
+
+    $host = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost';
+
+    // Detecta o subdiretório baseado no SCRIPT_NAME
+    $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+    $scriptDir = dirname($scriptName);
+
+    // Remove /includes se estiver nele
+    if (strpos($scriptDir, '/includes') !== false) {
+        $scriptDir = dirname($scriptDir);
+    }
+
+    // Limpa o path
+    $basePath = ($scriptDir === '/' || $scriptDir === '\\') ? '' : $scriptDir;
+
+    return $protocol . '://' . $host . $basePath;
+}
+
+define('SITE_URL', detectSiteUrl());
 define('SITE_NAME', env('SITE_NAME', 'Construbão'));
 define('SITE_DESCRIPTION', env('SITE_DESCRIPTION', 'Venda de Poste Padrão e Locação de Equipamentos'));
 
