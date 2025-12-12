@@ -1,0 +1,492 @@
+/**
+ * CONSTRUBÃO - Responsividade
+ * Media queries e ajustes para diferentes tamanhos de tela
+ */
+
+/* ============================================
+   BREAKPOINTS
+   - sm: 640px
+   - md: 768px
+   - lg: 1024px
+   - xl: 1280px
+   - 2xl: 1536px
+   ============================================ */
+
+/* ============================================
+   MOBILE FIRST (Base styles são para mobile)
+   ============================================ */
+
+/* ============================================
+   SMALL DEVICES (sm: 640px+)
+   ============================================ */
+@media (min-width: 640px) {
+    /* Container */
+    .container {
+        padding-left: var(--spacing-6);
+        padding-right: var(--spacing-6);
+    }
+
+    /* Typography */
+    h1 {
+        font-size: var(--text-4xl);
+    }
+
+    h2 {
+        font-size: var(--text-3xl);
+    }
+
+    /* Hero Section */
+    .hero-title {
+        font-size: var(--text-4xl);
+    }
+
+    .hero-stats {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    /* Grid adjustments */
+    .grid-2-sm {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ============================================
+   MEDIUM DEVICES (md: 768px+)
+   ============================================ */
+@media (min-width: 768px) {
+    /* Sections */
+    section {
+        padding: var(--spacing-20) 0;
+    }
+
+    /* Typography */
+    h1 {
+        font-size: var(--text-5xl);
+    }
+
+    h2 {
+        font-size: var(--text-4xl);
+    }
+
+    .hero-title {
+        font-size: var(--text-5xl);
+    }
+
+    /* Two column layouts */
+    .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-12);
+        align-items: center;
+    }
+
+    .two-column.reverse {
+        direction: rtl;
+    }
+
+    .two-column.reverse > * {
+        direction: ltr;
+    }
+
+    /* Card adjustments */
+    .card-horizontal {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+    }
+
+    /* Footer Grid */
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-bottom-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Features Grid */
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Blog Grid */
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ============================================
+   LARGE DEVICES (lg: 1024px+)
+   ============================================ */
+@media (min-width: 1024px) {
+    /* Header */
+    .header-container {
+        padding: var(--spacing-4) var(--container-padding);
+    }
+
+    .header-logo img {
+        height: 90px;
+    }
+
+    .header-nav {
+        display: flex;
+    }
+
+    .header-cta {
+        display: block;
+    }
+
+    .header-mobile-toggle {
+        display: none;
+    }
+
+    /* Hero */
+    .hero {
+        min-height: 100vh;
+    }
+
+    .hero-title {
+        font-size: var(--text-hero);
+    }
+
+    .hero-content {
+        max-width: 800px;
+    }
+
+    .hero-buttons {
+        flex-direction: row;
+    }
+
+    /* Sections */
+    section {
+        padding: var(--spacing-24) 0;
+    }
+
+    /* Footer Grid */
+    .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+
+    /* Features Grid */
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Equipment Grid */
+    .equipment-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* Blog Grid */
+    .blog-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Detail Page Layout */
+    .detail-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-12);
+    }
+}
+
+/* ============================================
+   EXTRA LARGE DEVICES (xl: 1280px+)
+   ============================================ */
+@media (min-width: 1280px) {
+    /* Container */
+    .container {
+        padding-left: var(--spacing-8);
+        padding-right: var(--spacing-8);
+    }
+
+    /* Equipment Grid */
+    .equipment-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    /* Testimonials */
+    .testimonials-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ============================================
+   2XL DEVICES (2xl: 1536px+)
+   ============================================ */
+@media (min-width: 1536px) {
+    /* Larger text for big screens */
+    body {
+        font-size: 18px;
+    }
+}
+
+/* ============================================
+   SPECIFIC COMPONENT RESPONSIVENESS
+   ============================================ */
+
+/* Hero Section */
+.hero {
+    padding-top: 100px; /* Account for fixed header */
+}
+
+@media (min-width: 1024px) {
+    .hero {
+        padding-top: 120px;
+    }
+}
+
+/* Category Cards */
+.category-cards {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+    .category-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Postes Grid */
+.postes-grid {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 480px) {
+    .postes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .postes-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .postes-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Sobre Section Layout */
+.sobre-layout {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+}
+
+@media (min-width: 1024px) {
+    .sobre-layout {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--spacing-16);
+    }
+
+    .sobre-layout > * {
+        flex: 1;
+    }
+
+    .sobre-layout.reverse {
+        flex-direction: row-reverse;
+    }
+}
+
+/* Contact Cards */
+.contact-cards {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+    .contact-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .contact-cards {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Testimonials Carousel */
+.testimonials-carousel {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.testimonial-card {
+    scroll-snap-align: start;
+    min-width: 300px;
+}
+
+@media (min-width: 768px) {
+    .testimonial-card {
+        min-width: 400px;
+    }
+}
+
+/* ============================================
+   UTILITY RESPONSIVE CLASSES
+   ============================================ */
+
+/* Hide/Show at breakpoints */
+.hidden-sm {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .hidden-sm {
+        display: block;
+    }
+    .show-sm {
+        display: none;
+    }
+}
+
+.hidden-md {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .hidden-md {
+        display: block;
+    }
+    .show-md {
+        display: none;
+    }
+}
+
+.hidden-lg {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .hidden-lg {
+        display: block;
+    }
+    .show-lg {
+        display: none;
+    }
+}
+
+/* Text alignment at breakpoints */
+@media (min-width: 768px) {
+    .md\:text-left {
+        text-align: left;
+    }
+    .md\:text-center {
+        text-align: center;
+    }
+    .md\:text-right {
+        text-align: right;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    /* Hide non-essential elements */
+    .header,
+    .footer,
+    .whatsapp-float,
+    .btn,
+    nav {
+        display: none !important;
+    }
+
+    /* Reset colors for printing */
+    body {
+        background: white;
+        color: black;
+    }
+
+    /* Ensure content is visible */
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    /* Page breaks */
+    h1, h2, h3 {
+        page-break-after: avoid;
+    }
+
+    img {
+        page-break-inside: avoid;
+        max-width: 100% !important;
+    }
+}
+
+/* ============================================
+   LANDSCAPE ORIENTATION (Mobile)
+   ============================================ */
+@media (max-width: 1023px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: var(--spacing-16) 0;
+    }
+
+    .hero-title {
+        font-size: var(--text-3xl);
+    }
+}
+
+/* ============================================
+   HIGH DPI / RETINA DISPLAYS
+   ============================================ */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Use higher resolution images if available */
+    .logo-retina {
+        background-image: url('../images/logo-construbao@2x.png');
+        background-size: contain;
+    }
+}
+
+/* ============================================
+   TOUCH DEVICES
+   ============================================ */
+@media (hover: none) {
+    /* Remove hover effects on touch devices */
+    .hover-scale:hover,
+    .hover-lift:hover {
+        transform: none;
+    }
+
+    /* Make touch targets larger */
+    .btn {
+        min-height: 48px;
+    }
+
+    .header-nav-link {
+        padding: var(--spacing-3) var(--spacing-2);
+    }
+}
+
+/* ============================================
+   SAFE AREA (Notch devices)
+   ============================================ */
+@supports (padding: max(0px)) {
+    .header {
+        padding-left: max(var(--container-padding), env(safe-area-inset-left));
+        padding-right: max(var(--container-padding), env(safe-area-inset-right));
+    }
+
+    .footer {
+        padding-bottom: max(var(--spacing-6), env(safe-area-inset-bottom));
+    }
+
+    .whatsapp-float {
+        right: max(var(--spacing-6), env(safe-area-inset-right));
+        bottom: max(var(--spacing-6), env(safe-area-inset-bottom));
+    }
+}

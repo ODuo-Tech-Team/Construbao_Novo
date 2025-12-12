@@ -1,0 +1,73 @@
+# =====================================================
+# CONSTRUBÃO - Git Ignore
+# =====================================================
+
+# Variáveis de ambiente (NUNCA COMMITAR!)
+.env
+
+# Uploads de usuários
+uploads/*
+!uploads/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+*.cache
+
+# Dependências (se usar composer futuramente)
+vendor/
+
+# IDEs e Editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.project
+.settings/
+*.swp
+*.swo
+*~
+
+# Sistema Operacional
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Node (se usar futuramente)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build
+dist/
+build/
+
+# Testes
+coverage/
+.phpunit.result.cache
+
+# Arquivos de configuração local
+config.local.php
+*.local.php
+
+# Sessões PHP
+sessions/
+
+# Outros
+*.sql.gz
+*.zip
+*.tar.gz
