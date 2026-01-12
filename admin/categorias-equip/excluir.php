@@ -19,13 +19,13 @@ if (!$categoria) {
 }
 
 // Verificar se tem equipamentos
-$totalEquipamentos = countRows('equipamentos', 'categoria_id = ' . $id);
+$totalEquipamentos = countRows('equipamentos', 'categoria_id = ?', [$id]);
 if ($totalEquipamentos > 0) {
     setFlash('error', 'Não é possível excluir uma categoria que possui equipamentos.');
     redirect(SITE_URL . '/admin/categorias-equip/');
 }
 
-$success = delete('categorias_equipamentos', $id);
+$success = delete('categorias_equipamentos', 'id = ?', [$id]);
 
 if ($success) {
     setFlash('success', 'Categoria excluída com sucesso!');

@@ -105,14 +105,22 @@ include __DIR__ . '/includes/header.php';
         <!-- Grid de Postes -->
         <div style="display: grid; grid-template-columns: 1fr; gap: 24px;" class="postes-grid">
             <?php foreach ($postes as $index => $poste): ?>
-            <a href="<?= SITE_URL ?>/poste.php?slug=<?= e($poste['slug']) ?>" class="poste-card" data-animate="slide-up" data-animate-delay="<?= $index + 1 ?>" style="display: block; background: white; border-radius: 16px; border: 1px solid var(--color-border); box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
-                <div style="aspect-ratio: 1; padding: 24px; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
-                    <img src="<?= SITE_URL ?>/<?= e($poste['imagem']) ?>" alt="<?= e($poste['nome']) ?>" style="width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease;">
+            <div class="poste-card" data-animate="slide-up" data-animate-delay="<?= $index + 1 ?>" style="display: flex; flex-direction: column; background: white; border-radius: 16px; border: 1px solid var(--color-border); box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
+                <a href="<?= SITE_URL ?>/poste.php?slug=<?= e($poste['slug']) ?>" style="display: block; flex: 1;">
+                    <div style="aspect-ratio: 1; padding: 24px; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
+                        <img src="<?= SITE_URL ?>/<?= e($poste['imagem']) ?>" alt="<?= e($poste['nome']) ?>" style="width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease;">
+                    </div>
+                    <div style="padding: 20px 20px 12px; text-align: center;">
+                        <h3 style="font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-foreground); margin: 0;"><?= e($poste['nome']) ?></h3>
+                    </div>
+                </a>
+                <div style="padding: 0 20px 20px; text-align: center;">
+                    <a href="<?= whatsappLink('Olá! Gostaria de um orçamento para ' . $poste['nome']) ?>" target="_blank" class="btn-card-cta" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 16px; background: #25D366; color: white; font-family: var(--font-subtitle); font-size: var(--text-sm); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 8px; text-decoration: none; transition: all 0.3s ease;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
+                        Orçamento
+                    </a>
                 </div>
-                <div style="padding: 20px; text-align: center;">
-                    <h3 style="font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-foreground); margin: 0;"><?= e($poste['nome']) ?></h3>
-                </div>
-            </a>
+            </div>
             <?php endforeach; ?>
         </div>
 
@@ -143,6 +151,10 @@ include __DIR__ . '/includes/header.php';
 .poste-card:hover img {
     transform: scale(1.05);
 }
+.btn-card-cta:hover {
+    background: #1faa54 !important;
+    transform: scale(1.02);
+}
 </style>
 
 <!-- Equipamentos Section -->
@@ -169,12 +181,18 @@ include __DIR__ . '/includes/header.php';
             $equipamentosPreview = array_slice($equipamentos, 0, 5);
             foreach ($equipamentosPreview as $index => $equip):
             ?>
-            <a href="<?= SITE_URL ?>/equipamento.php?slug=<?= e($equip['slug']) ?>" class="equip-card" data-animate="slide-up" style="display: block; background: white; border-radius: 12px; border: 1px solid var(--color-border); padding: 16px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; animation-delay: <?= $index * 0.05 ?>s;">
-                <div style="aspect-ratio: 1; margin-bottom: 16px; overflow: hidden; border-radius: 8px; background: white; display: flex; align-items: center; justify-content: center; padding: 8px;">
-                    <img src="<?= SITE_URL ?>/<?= e($equip['imagem']) ?>" alt="<?= e($equip['nome']) ?>" style="width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease;">
-                </div>
-                <h3 style="font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-foreground); margin: 0;"><?= e($equip['nome']) ?></h3>
-            </a>
+            <div class="equip-card" data-animate="slide-up" style="display: flex; flex-direction: column; background: white; border-radius: 12px; border: 1px solid var(--color-border); padding: 16px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; animation-delay: <?= $index * 0.05 ?>s;">
+                <a href="<?= SITE_URL ?>/equipamento.php?slug=<?= e($equip['slug']) ?>" style="display: block; flex: 1;">
+                    <div style="aspect-ratio: 1; margin-bottom: 16px; overflow: hidden; border-radius: 8px; background: white; display: flex; align-items: center; justify-content: center; padding: 8px;">
+                        <img src="<?= SITE_URL ?>/<?= e($equip['imagem']) ?>" alt="<?= e($equip['nome']) ?>" style="width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease;">
+                    </div>
+                    <h3 style="font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-foreground); margin: 0 0 12px 0;"><?= e($equip['nome']) ?></h3>
+                </a>
+                <a href="<?= whatsappLink('Olá! Gostaria de alugar ' . $equip['nome']) ?>" target="_blank" class="btn-card-cta" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 10px 12px; background: #25D366; color: white; font-family: var(--font-subtitle); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 8px; text-decoration: none; transition: all 0.3s ease;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
+                    Alugar
+                </a>
+            </div>
             <?php endforeach; ?>
         </div>
     </div>

@@ -23,7 +23,7 @@ if ($equipamento['imagem']) {
     deleteImage($equipamento['imagem'], 'equipamentos');
 }
 
-$success = delete('equipamentos', $id);
+$success = delete('equipamentos', 'id = ?', [$id]);
 
 if ($success) {
     setFlash('success', 'Equipamento excluído com sucesso!');

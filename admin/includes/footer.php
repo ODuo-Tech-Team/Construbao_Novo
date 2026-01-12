@@ -5,7 +5,7 @@
     <script src="<?= SITE_URL ?>/admin/assets/js/admin.js"></script>
     <?php if (isset($extraScripts)): ?>
         <?php foreach ($extraScripts as $script): ?>
-        <script src="<?= $script ?>"></script>
+        <script src="<?= SITE_URL ?>/admin/assets/js/<?= $script ?>"></script>
         <?php endforeach; ?>
     <?php endif; ?>
 </body>

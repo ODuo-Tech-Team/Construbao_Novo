@@ -19,13 +19,13 @@ if (!$categoria) {
 }
 
 // Verificar se tem posts
-$totalPosts = countRows('blog_posts', 'categoria_id = ' . $id);
+$totalPosts = countRows('blog_posts', 'categoria_id = ?', [$id]);
 if ($totalPosts > 0) {
     setFlash('error', 'Não é possível excluir uma categoria que possui posts.');
     redirect(SITE_URL . '/admin/categorias-blog/');
 }
 
-$success = delete('categorias_blog', $id);
+$success = delete('categorias_blog', 'id = ?', [$id]);
 
 if ($success) {
     setFlash('success', 'Categoria excluída com sucesso!');

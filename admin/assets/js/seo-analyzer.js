@@ -25,7 +25,7 @@ class SeoAnalyzer {
 
     init() {
         // Add event listeners for real-time analysis
-        const fieldsToWatch = ['titulo', 'slug', 'conteudo', 'focusKeyword', 'metaTitle', 'metaDescription'];
+        const fieldsToWatch = ['titulo', 'slug', 'focusKeyword', 'metaTitle', 'metaDescription'];
 
         fieldsToWatch.forEach(field => {
             if (this.fields[field]) {
@@ -34,15 +34,20 @@ class SeoAnalyzer {
             }
         });
 
-        // Watch TinyMCE content changes
-        if (typeof tinymce !== 'undefined') {
-            const checkTinyMCE = setInterval(() => {
-                const editor = tinymce.get('conteudo');
-                if (editor) {
-                    editor.on('change keyup', () => {
+        // Watch Quill content changes
+        if (typeof window.quill !== 'undefined' && window.quill) {
+            window.quill.on('text-change', () => {
+                this.analyze();
+            });
+        } else {
+            // Wait for Quill to be initialized
+            const checkQuill = setInterval(() => {
+                if (typeof window.quill !== 'undefined' && window.quill) {
+                    window.quill.on('text-change', () => {
                         this.analyze();
                     });
-                    clearInterval(checkTinyMCE);
+                    clearInterval(checkQuill);
+                    this.analyze();
                 }
             }, 500);
         }
@@ -52,22 +57,17 @@ class SeoAnalyzer {
     }
 
     getContent() {
-        // Try TinyMCE first
-        if (typeof tinymce !== 'undefined') {
-            const editor = tinymce.get('conteudo');
-            if (editor) {
-                return editor.getContent({ format: 'text' });
-            }
+        // Try Quill first (check window.quill)
+        if (typeof window.quill !== 'undefined' && window.quill) {
+            return window.quill.getText();
         }
         return this.fields.conteudo?.value || '';
     }
 
     getHtmlContent() {
-        if (typeof tinymce !== 'undefined') {
-            const editor = tinymce.get('conteudo');
-            if (editor) {
-                return editor.getContent();
-            }
+        // Try Quill first (check window.quill)
+        if (typeof window.quill !== 'undefined' && window.quill) {
+            return window.quill.root.innerHTML;
         }
         return this.fields.conteudo?.value || '';
     }
@@ -298,6 +298,9 @@ class SeoAnalyzer {
 document.addEventListener('DOMContentLoaded', function() {
     // Only initialize on blog create/edit pages
     if (document.getElementById('postForm')) {
-        window.seoAnalyzer = new SeoAnalyzer();
+        // Wait a bit for Quill to be ready
+        setTimeout(function() {
+            window.seoAnalyzer = new SeoAnalyzer();
+        }, 1000);
     }
 });

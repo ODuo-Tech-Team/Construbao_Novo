@@ -26,9 +26,9 @@ $currentDir = basename(dirname($_SERVER['PHP_SELF']));
     <link rel="icon" type="image/png" href="<?= ASSETS_URL ?>images/logo-construbao.png">
     <link rel="stylesheet" href="<?= ASSETS_URL ?>css/styles.css">
     <link rel="stylesheet" href="<?= SITE_URL ?>/admin/assets/css/admin.css">
-    <!-- Quill Editor -->
-    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <!-- Quill Editor (local) -->
+    <link href="<?= SITE_URL ?>/admin/assets/vendor/quill.snow.css" rel="stylesheet">
+    <script src="<?= SITE_URL ?>/admin/assets/vendor/quill.min.js"></script>
 </head>
 <body>
     <div class="admin-wrapper">

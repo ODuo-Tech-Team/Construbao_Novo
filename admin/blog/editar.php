@@ -4,8 +4,8 @@
  */
 
 $pageTitle = 'Editar Post';
+$extraScripts = ['seo-analyzer.js'];
 require_once __DIR__ . '/../includes/header.php';
-$extraScripts = [SITE_URL . '/admin/assets/js/seo-analyzer.js'];
 
 $id = intval($_GET['id'] ?? 0);
 $post = fetchById('blog_posts', $id);
@@ -139,7 +139,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?= csrfField() ?>
     <input type="hidden" name="seo_score" id="seo_score" value="<?= $data['seo_score'] ?? 0 ?>">
 
-    <div style="display: grid; grid-template-columns: 1fr 350px; gap: var(--spacing-6); align-items: start;">
+    <style>
+        .blog-edit-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: var(--spacing-6);
+            align-items: start;
+        }
+        @media (max-width: 1200px) {
+            .blog-edit-grid {
+                grid-template-columns: 1fr;
+            }
+            .seo-panel {
+                position: static !important;
+                order: -1;
+                margin-bottom: var(--spacing-4);
+            }
+        }
+    </style>
+
+    <div class="blog-edit-grid">
         <!-- Main Content -->
         <div>
             <div class="admin-form">
@@ -177,8 +196,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Conteúdo</label>
-                        <div id="editor" style="height: 300px; background: white;"><?= $data['conteudo'] ?></div>
+                        <label class="form-label">Conteúdo *</label>
+                        <div id="editor"></div>
                         <input type="hidden" name="conteudo" id="conteudo">
                     </div>
                 </div>
@@ -296,44 +315,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </form>
 
 <script>
-// Quill Editor
-var quill = new Quill('#editor', {
-    theme: 'snow',
-    placeholder: 'Escreva o conteúdo do post...',
-    modules: {
-        toolbar: [
-            [{ 'header': [1, 2, 3, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            ['blockquote', 'link', 'image'],
-            ['clean']
-        ]
+console.log('=== SCRIPT INICIADO ===');
+
+// Conteúdo inicial do post
+var initialContent = '';
+try {
+    initialContent = <?= json_encode($data['conteudo'] ?? '', JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
+    console.log('Conteúdo carregado com sucesso, tamanho:', initialContent ? initialContent.length : 0);
+} catch(e) {
+    console.error('Erro ao carregar conteúdo:', e);
+}
+
+// Aguarda o DOM carregar
+document.addEventListener('DOMContentLoaded', function() {
+    // Verifica se Quill está disponível
+    if (typeof Quill === 'undefined') {
+        document.getElementById('editor').innerHTML = '<div style="padding:20px;color:red;border:1px solid red;">Erro: Editor não carregou. Recarregue a página.</div>';
+        console.error('Quill não está definido');
+        return;
     }
-});
 
-// Update hidden input before submit
-document.querySelector('form').addEventListener('submit', function() {
-    document.getElementById('conteudo').value = quill.root.innerHTML;
-});
+    // Inicializa o Quill
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+        placeholder: 'Escreva o conteúdo do post...',
+        modules: {
+            toolbar: [
+                [{ 'header': [1, 2, 3, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['blockquote', 'link', 'image'],
+                ['clean']
+            ]
+        }
+    });
 
-// Show/hide publicado_em field based on status
-document.getElementById('status').addEventListener('change', function() {
-    const group = document.getElementById('publicado_em_group');
-    group.style.display = this.value === 'agendado' ? 'block' : 'none';
-});
+    // Disponibiliza globalmente
+    window.quill = quill;
 
-// Character counters
-document.getElementById('meta_title').addEventListener('input', function() {
-    document.getElementById('meta_title_count').textContent = this.value.length + '/70';
-});
+    // Carrega conteúdo existente
+    if (initialContent && initialContent.trim() !== '') {
+        quill.root.innerHTML = initialContent;
+    }
 
-document.getElementById('meta_description').addEventListener('input', function() {
-    document.getElementById('meta_description_count').textContent = this.value.length + '/160';
-});
+    // Ao submeter, copia conteúdo para o hidden input
+    document.getElementById('postForm').addEventListener('submit', function() {
+        document.getElementById('conteudo').value = quill.root.innerHTML;
+    });
 
-// Initialize counters
-document.getElementById('meta_title_count').textContent = document.getElementById('meta_title').value.length + '/70';
-document.getElementById('meta_description_count').textContent = document.getElementById('meta_description').value.length + '/160';
+    // Status -> mostra/esconde data de publicação
+    document.getElementById('status').addEventListener('change', function() {
+        document.getElementById('publicado_em_group').style.display =
+            this.value === 'agendado' ? 'block' : 'none';
+    });
+
+    // Contadores de caracteres
+    var metaTitle = document.getElementById('meta_title');
+    var metaDesc = document.getElementById('meta_description');
+
+    metaTitle.addEventListener('input', function() {
+        document.getElementById('meta_title_count').textContent = this.value.length + '/70';
+    });
+    document.getElementById('meta_title_count').textContent = metaTitle.value.length + '/70';
+
+    metaDesc.addEventListener('input', function() {
+        document.getElementById('meta_description_count').textContent = this.value.length + '/160';
+    });
+    document.getElementById('meta_description_count').textContent = metaDesc.value.length + '/160';
+
+    console.log('Editor inicializado com sucesso');
+});
 </script>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

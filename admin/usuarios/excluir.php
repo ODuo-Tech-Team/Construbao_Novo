@@ -27,7 +27,7 @@ if (!$usuario) {
 }
 
 // Excluir usuário
-$success = delete('usuarios', $id);
+$success = delete('usuarios', 'id = ?', [$id]);
 
 if ($success) {
     setFlash('success', 'Usuário excluído com sucesso!');

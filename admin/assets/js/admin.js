@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initConfirmDelete();
     initImageUpload();
     initSlugGenerator();
-    initTinyMCE();
 });
 
 /**
@@ -125,34 +124,6 @@ function slugify(text) {
         .replace(/\s+/g, '-')
         .replace(/--+/g, '-')
         .trim();
-}
-
-/**
- * Initialize TinyMCE
- */
-function initTinyMCE() {
-    const editor = document.getElementById('conteudo');
-    if (!editor) return;
-
-    tinymce.init({
-        selector: '#conteudo',
-        height: 400,
-        language: 'pt_BR',
-        plugins: 'lists link image table code fullscreen preview',
-        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | bullist numlist | link image | code fullscreen',
-        menubar: false,
-        branding: false,
-        content_style: 'body { font-family: Inter, sans-serif; font-size: 16px; line-height: 1.6; }',
-        setup: function(editor) {
-            editor.on('change', function() {
-                editor.save();
-                // Trigger SEO analysis
-                if (typeof updateSeoAnalysis === 'function') {
-                    updateSeoAnalysis();
-                }
-            });
-        }
-    });
 }
 
 /**

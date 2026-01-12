@@ -23,7 +23,7 @@ if ($depoimento['foto']) {
     deleteImage($depoimento['foto'], 'depoimentos');
 }
 
-$success = delete('depoimentos', $id);
+$success = delete('depoimentos', 'id = ?', [$id]);
 
 if ($success) {
     setFlash('success', 'Depoimento excluído com sucesso!');

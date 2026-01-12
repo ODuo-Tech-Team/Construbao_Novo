@@ -18,11 +18,13 @@ CREATE TABLE IF NOT EXISTS usuarios (
     senha VARCHAR(255) NOT NULL,
     nivel ENUM('admin', 'editor') DEFAULT 'editor',
     ativo TINYINT(1) DEFAULT 1,
+    api_key VARCHAR(64) NULL UNIQUE,
     ultimo_login DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_email (email),
-    INDEX idx_ativo (ativo)
+    INDEX idx_ativo (ativo),
+    INDEX idx_api_key (api_key)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================================

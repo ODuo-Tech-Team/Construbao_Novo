@@ -23,7 +23,7 @@ if ($poste['imagem']) {
     deleteImage($poste['imagem'], 'postes');
 }
 
-$success = delete('postes', $id);
+$success = delete('postes', 'id = ?', [$id]);
 
 if ($success) {
     setFlash('success', 'Poste excluído com sucesso!');

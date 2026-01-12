@@ -1,0 +1,11 @@
+# Bloquear acesso direto ao diretorio scripts via web
+# Os scripts devem ser executados via CLI
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^.*$ - [F,L]
+</IfModule>
+
+# Fallback caso mod_rewrite nao esteja disponivel
+Order deny,allow
+Deny from all
